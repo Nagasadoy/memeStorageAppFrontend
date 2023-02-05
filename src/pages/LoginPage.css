@@ -1,0 +1,22 @@
+.loginForm {
+    width: 300px;
+    margin: 0 auto;
+}
+
+.loginForm div {
+    margin-bottom: 10px;
+}
+
+.loginForm input, .loginForm button {
+    border-radius: 4px;
+    width: 80%;
+}
+
+.loginForm input {
+    border: 1px solid #ccc;
+}
+
+.loginForm button {
+    background-color: #333;
+    color: white;
+}

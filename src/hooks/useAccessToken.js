@@ -2,12 +2,12 @@ import { useState } from 'react';
 
 export default function useAccessToken() {
     const getAccessToken = () => {
-        return sessionStorage.getItem('token');
+        return localStorage.getItem('token');
     }
     const [accessToken, setAccessToken] = useState(getAccessToken);
 
     const saveAccessToken = userToken => {
-        sessionStorage.setItem('token', JSON.stringify(userToken));
+        localStorage.setItem('token', JSON.stringify(userToken));
         setAccessToken(userToken);
     }
 

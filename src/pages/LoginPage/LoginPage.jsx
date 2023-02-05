@@ -1,9 +1,13 @@
 import './LoginPage.css';
 import {useState} from "react";
 import axios, {post} from "axios";
+import useAccessToken from "../../hooks/useAccessToken";
+import {useDispatch} from "react-redux";
+import jwtDecode from "jwt-decode";
 
 export const LoginPage = ({setRefreshToken, setAccessToken}) => {
 
+    const dispatch = useDispatch();
     const [login, setLogin] = useState();
     const [password, setPassword] = useState();
     const [errorMsg, setErrorMsg] = useState('');
@@ -18,6 +22,10 @@ export const LoginPage = ({setRefreshToken, setAccessToken}) => {
                 setAccessToken(data?.token);
                 setRefreshToken(data?.refresh_token);
                 setErrorMsg('');
+                setErrorMsg('');
+
+                const tokenData = jwtDecode(data?.token);
+                dispatch({type:'SET_USER_NAME', payload: tokenData?.username});
             })
             .catch(function (error) {
                 console.log(error);

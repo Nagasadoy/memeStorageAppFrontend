@@ -2,11 +2,32 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {createStore} from "redux";
+import {Provider} from "react-redux";
+import jwtDecode from "jwt-decode";
+
+const token = localStorage.getItem('token');
+const userName = token !== null ? jwtDecode(token).username : null;
+
+const defaultState = {
+    username: userName
+}
+const reducer = (state = defaultState, action) => {
+    switch (action.type) {
+        case "SET_USER_NAME":
+            return {...state, username: action.payload};
+        default:
+            return state;
+    }
+}
+const store = createStore(reducer);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+      <Provider store={store}>
+          <App />
+      </Provider>
   </React.StrictMode>
 );
 

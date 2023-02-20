@@ -1,0 +1,17 @@
+#upload-input {
+    display: none;
+}
+
+.crop {
+    margin: auto;
+    /*text-align: center;*/
+    width: 500px;
+    height: 300px;
+    /*overflow: hidden;*/
+}
+
+.crop img {
+    object-fit: cover;
+    width: 600px;
+    height: 400px;
+}

@@ -33,3 +33,7 @@
 .sidebar .user img {
     width: 100%;
 }
+
+.sidebar a {
+    color: white;
+}

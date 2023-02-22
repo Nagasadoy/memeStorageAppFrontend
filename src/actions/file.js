@@ -1,13 +1,15 @@
 import axios from "axios";
 
-export function uploadFile(file, userMemeName) {
+const host = 'http://localhost:8080';
 
-    const host = 'http://localhost:8080';
+export function uploadFile(file, userMemeName, tagIds) {
+
     const url = `${host}/api/meme/create`;
 
     const formData = new FormData();
     formData.append('file', file);
     formData.append('userMemeName', userMemeName);
+    formData.append('tagIds', tagIds);
 
     const token = JSON.parse(localStorage.getItem('token'));
 
@@ -27,9 +29,8 @@ export function uploadFile(file, userMemeName) {
 }
 
 export function getUrlFileById(id) {
-    const host = 'http://localhost:8080';
     const url = `${host}/api/meme/image/${id}`;
-    
+
     return axios.get(url)
         .then(response => response.data)
         .then(data => data.url)
@@ -40,7 +41,6 @@ export function getUrlFileById(id) {
 
 export function createTag(credentials) {
 
-    const host = 'http://localhost:8080';
     const url = `${host}/api/tag/create`;
 
     return axios.post(url, credentials)
@@ -48,6 +48,17 @@ export function createTag(credentials) {
 }
 
 export function getAllMemesUser() {
-    const host = 'http://localhost:8080';
-    const url = `${host}/api/tag/create`;
+    const url = `${host}/api/user/memes`;
+
+    const token = JSON.parse(localStorage.getItem('token'));
+
+    return axios.get(url, {
+        headers: {Authorization: `Bearer ${token}`}
+    });
+}
+
+export function getAllTags() {
+    const url = `${host}/api/tags`;
+
+    return axios.get(url);
 }

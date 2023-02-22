@@ -1,7 +1,9 @@
-import {getUrlFileById, uploadFile} from "../../actions/file";
-import {useState} from "react";
+import {getAllTags, getUrlFileById, uploadFile} from "../../actions/file";
+import {useEffect, useState} from "react";
 import './CreateMemePage.css';
 import {Link} from "react-router-dom";
+import Select from "react-select";
+import React from "react";
 
 export const CreateMemePage = () => {
 
@@ -10,7 +12,22 @@ export const CreateMemePage = () => {
     const [file, setFile] = useState();
     const [userMemeName, setUserMemeName] = useState();
 
-    //fileUploadHandler
+    const [tags, setTags] = useState([]);
+
+    const [choosenTagIds, setChoosenTagIds] = useState();
+
+    useEffect(() => {
+       getAllTags()
+           .then(response => response.data)
+           .then(data => data.map(tag => {
+               return {value: tag.id, label: tag.name};
+           }))
+           .then(tags => {
+               console.log(tags);
+               setTags(tags);
+           });
+    }, []);
+
     const chooseFileHandler = (event) => {
         const file = event.target.files[0];
         setFile(file);
@@ -25,7 +42,9 @@ export const CreateMemePage = () => {
 
     const fileUploadHandler = () => {
         console.log('tut');
-        uploadFile(file, userMemeName).then(data => {
+        console.log(choosenTagIds);
+
+        uploadFile(file, userMemeName, choosenTagIds).then(data => {
             const id = data.id;
             const userMemeName = data.userMemeName;
             const url = data.url;
@@ -34,6 +53,13 @@ export const CreateMemePage = () => {
         });
     }
 
+    const onChangeSelectHandler = (tags) => {
+        const tagIds = tags.map(tag => {
+           return tag.value;
+        });
+
+        setChoosenTagIds(tagIds);
+    }
 
     return (
         <div>
@@ -43,6 +69,14 @@ export const CreateMemePage = () => {
             <input type='text' id='user-name-meme-input' onChange={event => changeUserMemeNameInputHandler(event)}/>
             <label htmlFor='upload-input'>Загрузить файл</label>
             <input type='file' id='upload-input' onChange={event => chooseFileHandler(event)} />
+            <Select
+                isMulti
+                name="colors"
+                options={tags}
+                className="basic-multi-select"
+                classNamePrefix="select"
+                onChange={elements => onChangeSelectHandler(elements)}
+            />
             <input type='button' value='Добавить' onClick={fileUploadHandler} />
             <div className='crop'>
                 {imgUrl &&

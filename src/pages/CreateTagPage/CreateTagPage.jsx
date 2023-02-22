@@ -1,6 +1,8 @@
 import {useState} from "react";
 import {createTag} from "../../actions/file";
 import {Link} from "react-router-dom";
+import 'react-select-search/style.css'
+import Select from "react-select/base";
 
 export const CreateTagPage = () => {
 

@@ -35,8 +35,9 @@ export const LoginPage = ({setRefreshToken, setAccessToken}) => {
 
     const handleSubmit = async e => {
         e.preventDefault();
+
         loginUser({
-           'email': login,
+            'email': login,
             'password': password
         });
     }
@@ -55,6 +56,7 @@ export const LoginPage = ({setRefreshToken, setAccessToken}) => {
                     type='text'
                     placeholder='Логин'
                     name='login'
+                    required
                     onChange={e => setLogin(e.target.value)}
                 />
             </div>
@@ -63,6 +65,7 @@ export const LoginPage = ({setRefreshToken, setAccessToken}) => {
                     type='password'
                     placeholder='Пароль'
                     name='password'
+                    required
                     onChange={e => setPassword(e.target.value)}
                 />
             </div>

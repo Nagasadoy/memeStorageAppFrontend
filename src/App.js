@@ -9,6 +9,7 @@ import {CreateMemePage} from "./pages/CreateMemePage/CreateMemePage";
 import {CreateTagPage} from "./pages/CreateTagPage/CreateTagPage";
 import {createStore} from "redux";
 import {useDispatch, useSelector} from "react-redux";
+import {EditMemePage} from "./pages/EditMemePage/EditMemePage";
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
                     <Route path="/" element={<MainBlock/>}/>
                     <Route path="/meme/create" element={<CreateMemePage/>}/>
                     <Route path="/tag/create" element={<CreateTagPage/>}/>
+                    <Route path="/meme/edit/:id" element={<EditMemePage/>}/>
                 </Routes>
             </BrowserRouter>
         </div>

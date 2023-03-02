@@ -1,9 +1,9 @@
-import {getAllTags, getUrlFileById, uploadFile} from "../../actions/file";
+import {createTag, getAllTags, uploadFile} from "../../actions/file";
 import {useEffect, useState} from "react";
 import './CreateMemePage.css';
 import {Link} from "react-router-dom";
-import Select from "react-select";
 import React from "react";
+import CreatableSelect from "react-select/creatable";
 
 export const CreateMemePage = () => {
 
@@ -14,70 +14,133 @@ export const CreateMemePage = () => {
 
     const [tags, setTags] = useState([]);
 
-    const [choosenTagIds, setChoosenTagIds] = useState();
+    const [choosenTagIds, setChoosenTagIds] = useState([]);
 
     useEffect(() => {
-       getAllTags()
-           .then(response => response.data)
-           .then(data => data.map(tag => {
-               return {value: tag.id, label: tag.name};
-           }))
-           .then(tags => {
-               console.log(tags);
-               setTags(tags);
-           });
+        getAllTags()
+            .then(response => response.data)
+            .then(data => data.map(tag => {
+                return {value: tag.id, label: tag.name};
+            }))
+            .then(tags => {
+                setTags(tags);
+            });
     }, []);
 
     const chooseFileHandler = (event) => {
         const file = event.target.files[0];
         setFile(file);
-        console.log(file);
     }
 
     const changeUserMemeNameInputHandler = (event) => {
         const name = event.target.value;
         setUserMemeName(name);
-        console.log(userMemeName);
     }
 
-    const fileUploadHandler = () => {
-        console.log('tut');
-        console.log(choosenTagIds);
+    const fileUploadHandler = (e) => {
+        e.preventDefault();
 
-        uploadFile(file, userMemeName, choosenTagIds).then(data => {
+        console.log('choosenTagIds', choosenTagIds);
+
+        uploadFile(file, userMemeName, JSON.stringify(choosenTagIds)).then(data => {
             const id = data.id;
             const userMemeName = data.userMemeName;
             const url = data.url;
-
             setImgUrl(data.url)
         });
     }
 
-    const onChangeSelectHandler = (tags) => {
-        const tagIds = tags.map(tag => {
-           return tag.value;
-        });
+    const onChangeSelectHandler = (selectedTags) => {
+        let selectedTagIds = [];
 
-        setChoosenTagIds(tagIds);
+        for (let i=0; i < selectedTags.length; i++) {
+            let tag = selectedTags[i];
+
+            if (tag.__isNew__) {
+                const id = getIdTagByName(tag.value);
+                console.log('id', id);
+                if (id !== null) {
+                    selectedTagIds.push(id);
+                } else {
+                    createTag({name: tag.value, score: 1})
+                        .then(data => {
+                            setTags(tags => [...tags, {value: data.id, label: data.name}]);
+                            selectedTagIds.push(data.id);
+                        })
+                        .catch((e) => {
+                            console.log(e);
+                        });
+                }
+            } else {
+                selectedTagIds.push(tag.value);
+            }
+        }
+        setChoosenTagIds(selectedTagIds);
+
+        // TODO потом посмотреть как сделать это правильно без for цикла
+
+        // const tagIds = tags.map(tag => {
+        //     if (tag.__isNew__) {
+        //         console.log('tag', tag);
+        //         createTag({name: tag.value, score: 1})
+        //             .then(data => { console.log('обновляем занчение!'); setCreatedTag(data.id)})
+        //             .catch((e) => {
+        //
+        //             });
+        //         console.log(createdTag);
+        //         return createdTag;
+        //     }
+        //     console.log(tag);
+        //     return tag.value;
+        // });
+        // console.log(tagIds);
+        // setChoosenTagIds(tagIds);
+    }
+    
+    const getIdTagByName = (tagName) => {
+        for (let i=0; i < tags.length; i++) {
+            const currentTag = tags[i];
+            console.log(currentTag);
+            if (currentTag.label === tagName) {
+                return currentTag.value;
+            }
+        }
+        return null;
     }
 
     return (
         <div>
             <Link to='/'>На главную</Link>
             <h1>Create Meme Page</h1>
-            <label htmlFor='user-name-meme-input'>Пользовательское имя мема:</label>
-            <input type='text' id='user-name-meme-input' onChange={event => changeUserMemeNameInputHandler(event)}/>
-            <label htmlFor='upload-input'>Загрузить файл</label>
-            <input type='file' id='upload-input' onChange={event => chooseFileHandler(event)} />
-            <Select
-                isMulti
-                name="colors"
-                options={tags}
-                className="basic-multi-select"
-                classNamePrefix="select"
-                onChange={elements => onChangeSelectHandler(elements)}
-            />
-            <input type='button' value='Добавить' onClick={fileUploadHandler} />
+            <form className='form-create-meme' onSubmit={fileUploadHandler}>
+                {/*<div>*/}
+                {/*    <label htmlFor='add-tag-for-meme'>Создать новый тэг</label>*/}
+                {/*    <input type='text' id='add-tag-for-meme' onChange={(event) => {*/}
+                {/*        handleChangeTagField(event)*/}
+                {/*    }}/>*/}
+                {/*    <button onClick={buttonHandler}>Добавить тэг</button>*/}
+                {/*</div>*/}
+                <div>
+                    <input type='text' placeholder='Введите имя мема' onChange={event => changeUserMemeNameInputHandler(event)}/>
+                </div>
+                <div>
+                    <label htmlFor='upload-input'>Загрузить файл</label>
+                    <input type='file' id='upload-input' onChange={event => chooseFileHandler(event)}/>
+                </div>
+                <div className='choose-tag-selector'>
+                    <CreatableSelect
+                        isMulti
+                        options={tags}
+                        className="basic-multi-select"
+                        classNamePrefix="select"
+                        placeholder='Выберите тэги'
+                        onChange={elements => onChangeSelectHandler(elements)}
+                    />
+                </div>
+                <div>
+                    <button type='submit'>Создать</button>
+                </div>
+            </form>
             <div className='crop'>
                 {imgUrl &&
                     <div>

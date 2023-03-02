@@ -15,3 +15,29 @@
     width: 600px;
     height: 400px;
 }
+
+.form-create-meme {
+    width: 600px;
+    margin: 0 auto;
+}
+.form-create-meme input, .form-create-meme button {
+    border-radius: 4px;
+    width: 80%;
+}
+
+.form-create-meme input {
+    border: 1px solid #ccc;
+}
+
+.form-create-meme div{
+    margin-bottom: 10px;
+}
+.form-create-meme button {
+    background-color: #333;
+    color: white;
+}
+
+.choose-tag-selector {
+    width: 80%;
+    margin: 0 auto;
+}

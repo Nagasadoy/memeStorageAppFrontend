@@ -24,7 +24,7 @@ export function uploadFile(file, userMemeName, tagIds) {
             return data;
         })
         .catch(function (error) {
-            console.log(error);
+            alert(error.response.data?.message);
         });
 }
 

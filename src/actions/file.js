@@ -62,3 +62,12 @@ export function getAllTags() {
 
     return axios.get(url);
 }
+
+export function removeTagById(id) {
+    const url = `${host}/api/meme/remove/${id}`;
+    const token = JSON.parse(localStorage.getItem('token'));
+
+    return axios.delete(url, {
+        headers: {Authorization: `Bearer ${token}`}
+    })
+}

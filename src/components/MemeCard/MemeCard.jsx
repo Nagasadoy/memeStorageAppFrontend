@@ -1,43 +1,43 @@
 import './MemeCard.css';
 import {TagCollection} from "../TagCollection/TagCollection";
 import {Link} from "react-router-dom";
+import {removeTagById} from "../../actions/file";
 
-export const MemeCard = ({meme}) => {
-
-    // <div className="meme-card">
-    //     <div className="card-img">
-    //         <img
-    //             src={meme.fileLink}
-    //             alt=""
-    //         />
-    //     </div>
-    //     <div className="card-content">
-    //         <Link to={"/meme/edit/" + meme.id}>{meme.userMemeName}</Link>
-    //     </div>
-    //     <section className='tags'>
-    //         <TagCollection tags={meme.tags}/>
-    //     </section>
-    // </div>
+export const MemeCard = ({meme, callbackRemove}) => {
 
     const copyButtonHandler = (e) => {
 
+    }
+
+    const deleteButtonHandler = (tagId) => {
+        removeTagById(tagId)
+            .then(response => {
+                console.log('meme с id ' + tagId + ' удален!');
+                callbackRemove(tagId);
+            })
+            .catch(e => {
+                console.log(e);
+            })
     }
 
     return (
         <div className='wrapper'>
 
             <div className='card'>
-                <div className='card-title'>
-                    <Link to={"/meme/edit/" + meme.id} download>
-                        <img className='card-img' src={meme.fileLink} alt=''/>
+                <Link to={"/meme/edit/" + meme.id} className='card-body'>
+                    <div className='card-title'>
                         {meme.userMemeName}
-                    </Link>
-                </div>
-
+                    </div>
+                    <div>
+                        <img className='card-img' src={meme.fileLink} alt=''/>
+                    </div>
+                </Link>
                 <div className='btn-keeper'>
-                    {/*<a className='btn' href='#'>Скопировать</a>*/}
                     <button className='btn'>Скопировать</button>
+                    <button className='btn'>Редактировать</button>
+                    <button className='btn' onClick={() => { console.log(meme.id); deleteButtonHandler(meme.id)}}>Удалить</button>
                 </div>
+                <hr/>
 
                 <section className='tags'>
                     <TagCollection tags={meme.tags}/>

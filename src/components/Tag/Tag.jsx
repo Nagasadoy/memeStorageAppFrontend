@@ -1,8 +1,10 @@
+import './Tag.css';
+
 export const Tag = ({tag}) => {
 
     return (
         <div className='tag'>
-           <span>{tag.name}</span>
+            {tag.name}
         </div>
     );
 }

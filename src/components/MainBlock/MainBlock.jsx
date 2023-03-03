@@ -9,7 +9,7 @@ import {MemeCollection} from "../MemeCollection/MemeCollection";
 
 export const MainBlock = () => {
 
-    const [userMemes, setUserMemes] = useState();
+    const [userMemes, setUserMemes] = useState([]);
 
     useEffect(() => {
         getAllMemesUser()
@@ -20,10 +20,14 @@ export const MainBlock = () => {
             });
     }, []);
 
+    const removeMeme = (memeId) => {
+        setUserMemes(userMemes => userMemes.filter(meme => meme.id !== memeId));
+    }
+
     return (
         <>
             <SideBar/>
-            <MemeCollection memes={userMemes}/>
+            <MemeCollection memes={userMemes} callbackRemove={removeMeme}/>
         </>
     );
 }

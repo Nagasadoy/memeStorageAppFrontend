@@ -31,10 +31,16 @@ body {
     height: 350px;
 }
 
-.card-title {
+.card-body {
     margin-top: 20px;
-    font-size: 14px;
+    text-decoration: none;
+    font-size: 27px;
     font-weight: 500;
+    color: black;
+}
+
+.card-title {
+    margin: 0 10px 10px 10px;
 }
 
 .card-sub {
@@ -49,13 +55,13 @@ body {
 }
 
 .btn {
-    background-color: #846A6A;
+    background-color: black;
     padding: 7px 12px;
     cursor: pointer;
-    /*text-decoration: none;*/
-    color: #eee;
+    color: white;
     border-radius: 5px;
     transition: background-color 0.5s linear;
+    margin-left: 5px;
 }
 
 .btn:hover {

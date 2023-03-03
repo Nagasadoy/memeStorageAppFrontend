@@ -1,0 +1,11 @@
+.header {
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 10px 10px 10px #ccc9c9;
+    margin: 10px 10px 10px 10px;
+}
+
+nav {
+    padding: 0 1rem;
+}

@@ -1,20 +1,12 @@
-/*.meme-card img {*/
-/*    width: 200px;*/
-/*    height: 200px;*/
-/*}*/
-
-/*.meme-card {*/
-/*    background: #cccccc;*/
-/*    !*width: 400px;*!*/
-/*    padding: 100px;*/
-/*}*/
-
 body {
     font-family: 'Open Sans', sans-serif;
     background-color: #eee;
 }
 
 .card {
+    page-break-inside: avoid;
+    break-inside: avoid;
+
     background-color: #fff;
     width: 400px;
     border-radius: 20px;

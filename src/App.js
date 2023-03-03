@@ -10,6 +10,7 @@ import {CreateTagPage} from "./pages/CreateTagPage/CreateTagPage";
 import {createStore} from "redux";
 import {useDispatch, useSelector} from "react-redux";
 import {EditMemePage} from "./pages/EditMemePage/EditMemePage";
+import {Toaster} from "react-hot-toast";
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
 
     return (
         <div className="App">
+            <Toaster/>
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<MainBlock/>}/>

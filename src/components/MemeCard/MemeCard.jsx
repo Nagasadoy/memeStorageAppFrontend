@@ -24,7 +24,7 @@ export const MemeCard = ({meme, callbackRemove}) => {
         <div className='wrapper'>
 
             <div className='card'>
-                <Link to={"/meme/edit/" + meme.id} className='card-body'>
+                <Link to={"/meme/edit/" + meme.id} className='card-body' state={{meme: meme}}>
                     <div className='card-title'>
                         {meme.userMemeName}
                     </div>
@@ -34,7 +34,6 @@ export const MemeCard = ({meme, callbackRemove}) => {
                 </Link>
                 <div className='btn-keeper'>
                     <button className='btn'>Скопировать</button>
-                    <button className='btn'>Редактировать</button>
                     <button className='btn' onClick={() => { console.log(meme.id); deleteButtonHandler(meme.id)}}>Удалить</button>
                 </div>
                 <hr/>

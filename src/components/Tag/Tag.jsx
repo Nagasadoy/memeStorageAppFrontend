@@ -4,7 +4,10 @@ export const Tag = ({tag}) => {
 
     return (
         <div className='tag'>
-            {tag.name}
+            <div>
+                {tag.name}
+                <button>x</button>
+            </div>
         </div>
     );
 }

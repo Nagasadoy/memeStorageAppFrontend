@@ -1,11 +1,9 @@
 import {SideBar} from "./SideBar/SideBar";
-import {Link} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import jwtDecode from "jwt-decode";
-import useAccessToken from "../../hooks/useAccessToken";
 import {useEffect, useState} from "react";
 import {getAllMemesUser} from "../../actions/file";
 import {MemeCollection} from "../MemeCollection/MemeCollection";
+import {toast, Toaster} from "react-hot-toast";
+import {Header} from "../Header/Header";
 
 export const MainBlock = () => {
 
@@ -22,11 +20,13 @@ export const MainBlock = () => {
 
     const removeMeme = (memeId) => {
         setUserMemes(userMemes => userMemes.filter(meme => meme.id !== memeId));
+        toast('Мем удален!');
     }
 
     return (
         <>
-            <SideBar/>
+            {/*<SideBar/>*/}
+            <Header/>
             <MemeCollection memes={userMemes} callbackRemove={removeMeme}/>
         </>
     );

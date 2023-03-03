@@ -23,9 +23,6 @@ export function uploadFile(file, userMemeName, tagIds) {
         .then(data => {
             return data;
         })
-        .catch(function (error) {
-            alert(error.response.data?.message);
-        });
 }
 
 export function getUrlFileById(id) {
@@ -70,4 +67,15 @@ export function removeTagById(id) {
     return axios.delete(url, {
         headers: {Authorization: `Bearer ${token}`}
     })
+}
+
+export function getMemeById(memeId) {
+    const url = `${host}/api/meme/${memeId}`;
+    const token = JSON.parse(localStorage.getItem('token'));
+
+    console.log('axios');
+
+    return axios.get(url, {
+       headers: {Authorization: `Bearer ${token}`}
+    });
 }

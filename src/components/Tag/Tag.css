@@ -7,3 +7,8 @@
     border: 2px #333333;
     background-color: #d3d3d3;
 }
+
+.tag button {
+    border-radius: 200px;
+    background-color: white;
+}

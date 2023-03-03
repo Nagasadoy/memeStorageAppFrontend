@@ -4,6 +4,8 @@ import './CreateMemePage.css';
 import {Link} from "react-router-dom";
 import React from "react";
 import CreatableSelect from "react-select/creatable";
+import {toast} from "react-hot-toast";
+import {Header} from "../../components/Header/Header";
 
 export const CreateMemePage = () => {
 
@@ -42,12 +44,16 @@ export const CreateMemePage = () => {
 
         console.log('choosenTagIds', choosenTagIds);
 
-        uploadFile(file, userMemeName, JSON.stringify(choosenTagIds)).then(data => {
-            const id = data.id;
-            const userMemeName = data.userMemeName;
-            const url = data.url;
-            setImgUrl(data.url)
-        });
+        uploadFile(file, userMemeName, JSON.stringify(choosenTagIds))
+            .then(data => {
+                const id = data.id;
+                const userMemeName = data.userMemeName;
+                const url = data.url;
+                setImgUrl(data.url)
+            })
+            .catch(function (error) {
+                toast(error.response.data?.message)
+            });
     }
 
     const onChangeSelectHandler = (selectedTags) => {
@@ -110,16 +116,10 @@ export const CreateMemePage = () => {
 
     return (
         <div>
+            <Header/>
             <Link to='/'>На главную</Link>
             <h1>Create Meme Page</h1>
             <form className='form-create-meme' onSubmit={fileUploadHandler}>
-                {/*<div>*/}
-                {/*    <label htmlFor='add-tag-for-meme'>Создать новый тэг</label>*/}
-                {/*    <input type='text' id='add-tag-for-meme' onChange={(event) => {*/}
-                {/*        handleChangeTagField(event)*/}
-                {/*    }}/>*/}
-                {/*    <button onClick={buttonHandler}>Добавить тэг</button>*/}
-                {/*</div>*/}
                 <div>
                     <input type='text' placeholder='Введите имя мема' onChange={event => changeUserMemeNameInputHandler(event)}/>
                 </div>

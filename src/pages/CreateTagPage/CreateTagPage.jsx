@@ -3,6 +3,7 @@ import {createTag} from "../../actions/file";
 import {Link} from "react-router-dom";
 import 'react-select-search/style.css'
 import Select from "react-select/base";
+import {Header} from "../../components/Header/Header";
 
 export const CreateTagPage = () => {
 
@@ -27,6 +28,7 @@ export const CreateTagPage = () => {
 
     return (
         <div>
+            <Header/>
             {message ? <h1>{message}</h1> : ''}
             <h1>Create tag page</h1>
             <div>

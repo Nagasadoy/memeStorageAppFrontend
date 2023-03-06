@@ -39,8 +39,11 @@ export function getUrlFileById(id) {
 export function createTag(credentials) {
 
     const url = `${host}/api/tag/create`;
+    const token = JSON.parse(localStorage.getItem('token'));
 
-    return axios.post(url, credentials)
+    return axios.post(url, credentials, {
+        headers: {Authorization: `Bearer ${token}`}
+    })
         .then(response => response.data)
 }
 
@@ -54,10 +57,13 @@ export function getAllMemesUser() {
     });
 }
 
-export function getAllTags() {
+export function getAllUserTags() {
     const url = `${host}/api/tags`;
+    const token = JSON.parse(localStorage.getItem('token'));
 
-    return axios.get(url);
+    return axios.get(url, {
+        headers: {Authorization: `Bearer ${token}`}
+    });
 }
 
 export function removeTagById(id) {

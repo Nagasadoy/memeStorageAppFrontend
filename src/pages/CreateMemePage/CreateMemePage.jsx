@@ -1,4 +1,4 @@
-import {createTag, getAllTags, uploadFile} from "../../actions/file";
+import {createTag, getAllUserTags, uploadFile} from "../../actions/file";
 import {useEffect, useState} from "react";
 import './CreateMemePage.css';
 import {Link} from "react-router-dom";
@@ -19,7 +19,7 @@ export const CreateMemePage = () => {
     const [choosenTagIds, setChoosenTagIds] = useState([]);
 
     useEffect(() => {
-        getAllTags()
+        getAllUserTags()
             .then(response => response.data)
             .then(data => data.map(tag => {
                 return {value: tag.id, label: tag.name};
@@ -68,7 +68,7 @@ export const CreateMemePage = () => {
                 if (id !== null) {
                     selectedTagIds.push(id);
                 } else {
-                    createTag({name: tag.value, score: 1})
+                    createTag({name: tag.value})
                         .then(data => {
                             setTags(tags => [...tags, {value: data.id, label: data.name}]);
                             selectedTagIds.push(data.id);
@@ -88,7 +88,7 @@ export const CreateMemePage = () => {
         // const tagIds = tags.map(tag => {
         //     if (tag.__isNew__) {
         //         console.log('tag', tag);
-        //         createTag({name: tag.value, score: 1})
+        //         createTag({name: tag.value})
         //             .then(data => { console.log('обновляем занчение!'); setCreatedTag(data.id)})
         //             .catch((e) => {
         //

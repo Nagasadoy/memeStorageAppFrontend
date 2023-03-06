@@ -1,11 +1,11 @@
 import {useLocation, useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
-import {getAllMemesUser, getAllTags, getMemeById} from "../../actions/file";
-import {MemeCard} from "../../components/MemeCard/MemeCard";
+import {getAllMemesUser, getAllUserTags, getMemeById} from "../../actions/file";
 import {MemeCardForEdit} from "../../components/MemeCard/MemeCardForEdit";
 import CreatableSelect from "react-select/creatable";
 import {toast} from "react-hot-toast";
 import {Header} from "../../components/Header/Header";
+import './EditMemePage.css';
 
 export const EditMemePage = () => {
 
@@ -16,7 +16,7 @@ export const EditMemePage = () => {
     const [meme, setMeme] = useState(null);
 
     useEffect(() => {
-        getAllTags()
+        getAllUserTags()
             .then(response => response.data)
             .then(data => data.map(tag => {
                 return {value: tag.id, label: tag.name};
@@ -41,14 +41,24 @@ export const EditMemePage = () => {
         <div>
             <Header/>
             <MemeCardForEdit meme={meme}/>
-            <CreatableSelect
-                isMulti
-                options={tags}
-                className="basic-multi-select"
-                classNamePrefix="select"
-                placeholder='Выберите тэги'
-                onChange={elements => console.log(elements)}
-            />
+            <form className='form-edit-meme'>
+                <div className={'choose-tag-selector'}>
+                    <CreatableSelect
+                        isMulti
+                        options={tags}
+                        className="basic-multi-select"
+                        classNamePrefix="select"
+                        placeholder='Выберите тэги'
+                        onChange={elements => console.log(elements)}
+                    />
+                </div>
+                <div>
+                    <input type='text' placeholder='Введите имя мема' />
+                </div>
+                <div>
+                    <button type='submit'>Сохранить</button>
+                </div>
+            </form>
         </div>
     );
 }

@@ -12,7 +12,7 @@ export const CreateTagPage = () => {
 
     const buttonHandler = () => {
         console.log('tag', tag);
-        createTag({name: tag, score: 1})
+        createTag({name: tag})
             .then(data => setMessage('Тэг успешно создан!'))
             .catch((e) => {
                 console.log(e);
